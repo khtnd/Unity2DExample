@@ -41,7 +41,8 @@ public class PlayerMove : MonoBehaviour
 
     private void FixedUpdate() {
         float h = Input.GetAxisRaw("Horizontal");
-        rigid.AddForce(new Vector2(h, 0), ForceMode2D.Impulse);
+        Debug.Log("h : " + h);
+        rigid.AddForce(new Vector2(2 * h, 0), ForceMode2D.Impulse);
 
         if (rigid.velocity.x > maxSpeed)
         {
