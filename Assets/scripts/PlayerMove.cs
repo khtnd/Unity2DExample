@@ -30,15 +30,18 @@ public class PlayerMove : MonoBehaviour
             rigid.velocity = new Vector2(0, rigid.velocity.y);
         }
 
-        if (Input.GetButtonDown("Horizontal"))
-            spriteRenderer.flipX = Input.GetAxisRaw("Horizontal") == -1;
+        if (rigid.velocity.x < 0)
+            spriteRenderer.flipX = true;
+        else if (rigid.velocity.x > 0)
+            spriteRenderer.flipX = false;
+
 
         animator.SetBool("isWalking", rigid.velocity.normalized.x != 0);
     }
 
     private void FixedUpdate() {
         float h = Input.GetAxisRaw("Horizontal");
-        rigid.AddForce(Vector2.right * h, ForceMode2D.Impulse);
+        rigid.AddForce(new Vector2(h, 0), ForceMode2D.Impulse);
 
         if (rigid.velocity.x > maxSpeed)
         {
@@ -48,8 +51,6 @@ public class PlayerMove : MonoBehaviour
         {
             rigid.velocity = new Vector2(-maxSpeed, rigid.velocity.y);
         }
-
-        //Debug.Log("velocity : " + rigid.velocity);
 
         //Landing Platform
         if (rigid.velocity.y < 0)
